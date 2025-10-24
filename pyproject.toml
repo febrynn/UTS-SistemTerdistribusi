@@ -1,0 +1,28 @@
+[project]
+name = "dedup-aggregator"
+version = "0.1.0"
+description = "Layanan aggregator FastAPI dengan deduplikasi event"
+authors = [
+    { name = "Febriani" }
+]
+requires-python = ">=3.10"
+
+dependencies = [
+    "fastapi==0.95.2",
+    "uvicorn[standard]==0.22.0",
+    "pydantic==1.10.11",
+    "aiosqlite==0.18.0",
+    "httpx==0.24.1",
+    "pytest==7.4.0",
+    "pytest-asyncio==0.21.0"
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "strict"
+addopts = "-v"
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"

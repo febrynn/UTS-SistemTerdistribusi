@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  aggregator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aggregator
+    ports:
+      - "8000:8000"
+    environment:
+      - DEDUP_DB=/data/dedup.db
+    volumes:
+      - aggregator_data:/data
+    networks:
+      - app_net
+
+  publisher:
+    build:
+      context: ./publisher
+      dockerfile: Dockerfile
+    container_name: publisher
+    depends_on:
+      - aggregator
+    environment:
+      - AGGREGATOR_URL=http://aggregator:8000/publish
+    networks:
+      - app_net
+    restart: on-failure  
+
+volumes:
+  aggregator_data:
+
+networks:
+  app_net:
+    driver: bridge
